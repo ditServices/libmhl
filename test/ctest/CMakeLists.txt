@@ -9,3 +9,7 @@ include_directories(${libmhl_LIB_DIR})
 add_executable(ctest_ignorespec_null_test ctest_ignorespec_null.cpp)
 target_link_libraries(ctest_ignorespec_null_test libmhl)
 add_test(ctest_ignorespec_null_result ctest_ignorespec_null_test)
+
+add_executable(ctest_currenttime_test ctest_currenttime_test.cpp)
+target_link_libraries(ctest_currenttime_test libmhl)
+add_test(ctest_currenttime_test_result ctest_currenttime_test)
