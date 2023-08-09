@@ -5,3 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(${libmhl_SOURCE_DIR})
 include_directories(${libmhl_LIB_DIR})
+
+add_executable(ctest_ignorespec_null_test ctest_ignorespec_null.cpp)
+target_link_libraries(ctest_ignorespec_null_test libmhl)
+add_test(ctest_ignorespec_null_result ctest_ignorespec_null_test)

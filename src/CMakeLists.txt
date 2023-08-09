@@ -3,5 +3,11 @@ project(libmhl)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(libmhl Clip.cpp Clip.h Mhl.cpp Mhl.h)
+add_library(libmhl
+        HashList.cpp
+        HashList.h
+        Utils.cpp
+        Utils.h
+        IgnoreSpec.cpp
+        IgnoreSpec.h)
 target_link_libraries(libmhl pugixml)
