@@ -18,8 +18,8 @@ int create_ignorelist(std::vector<std::string> *patterns) {
 int main() {
     std::vector<std::string> pats;
     pats.emplace_back(".DS_Store");
-    pats.emplace_back("");
     pats.emplace_back("ascmhl");
+    pats.emplace_back("");
 
     return create_ignorelist(&pats);
 }
