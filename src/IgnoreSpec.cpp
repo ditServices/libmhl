@@ -4,6 +4,8 @@
 
 #include "IgnoreSpec.h"
 
+
+//check for empty strings
 int MHL::IgnoreSpec::check_pattern_len(std::string *pattern) {
     if(pattern->empty()) {
         return 1;
@@ -11,6 +13,7 @@ int MHL::IgnoreSpec::check_pattern_len(std::string *pattern) {
     return 0;
 }
 
+// constructor loop over each item, check and add.
 MHL::IgnoreSpec::IgnoreSpec(std::vector<std::string> *pattern_list) {
     for(auto &pat : *pattern_list) {
         if(check_pattern_len(&pat) == 1) {
@@ -26,4 +29,8 @@ int MHL::IgnoreSpec::add_pattern(std::string *pattern) {
     }
     this->mIgnoreList.push_back(*pattern);
     return 0;
+}
+
+std::vector<std::string> MHL::IgnoreSpec::get_pattern_list() {
+    return this->mIgnoreList;
 }

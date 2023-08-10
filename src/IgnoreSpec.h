@@ -16,6 +16,7 @@ namespace MHL {
     public:
         explicit IgnoreSpec(std::vector<std::string> *pattern_list);
         int add_pattern(std::string *pattern);
+        std::vector<std::string> get_pattern_list();
     };
 }
 
