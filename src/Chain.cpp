@@ -4,6 +4,6 @@
 
 #include "Chain.h"
 
-void MHL::Chain::append_generation(MHL::ChainGeneration *generation) {
-    this->mGenerations.push_back(*generation);
+void MHL::Chain::append_generation(ChainGeneration &generation) {
+    this->mGenerations.push_back(generation);
 }

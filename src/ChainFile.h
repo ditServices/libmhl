@@ -5,18 +5,34 @@
 #ifndef LIBMHL_CHAINFILE_H
 #define LIBMHL_CHAINFILE_H
 
+/*
+ * MHL CHAIN FILE
+ * This class is the root class that manages the ChainFile.
+ * It contains Chain object which handles the main body of the chain file
+ * and a further subclass that handles each element of generations within
+ * the chain file.
+ *
+ */
+
 #include "Chain.h"
 #include <pugixml.hpp>
 
 namespace MHL {
     class ChainFile {
     private:
-        fs::path mChainFilePath;
-        MHL::Chain mChain;
-        pugi::xml_document mChainXMLFile;
+        fs::path mChainFilePath; // the full path to the chain file that we are parsing
+        MHL::Chain mChain; // our object that will hold our parsed data
+        pugi::xml_document mChainXMLFile; // our XML processing instance
     public:
-        int write(const fs::path *file_name);
-        int parse(const fs::path *file_name);
+        ChainFile(fs::path &mhlSourceChainFilePath)
+            : mChainFilePath(mhlSourceChainFilePath), mChain(mhlSourceChainFilePath) {
+
+        }
+
+        int write(const fs::path &file_name);
+
+        // the individual chain object manages each generation. Generations are a stored within a vector of ChainGeneration objects.
+        int parse(const fs::path &file_name);
     };
 }
 

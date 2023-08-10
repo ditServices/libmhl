@@ -5,6 +5,14 @@
 #ifndef LIBMHL_CHAIN_H
 #define LIBMHL_CHAIN_H
 
+/*
+ * MHL CHAIN
+ * This class is responsible for managing the chain file contents.
+ * Data that is parsed in ChainFile is stored in the Chain class. Each Generation
+ * then stored in the ChainGeneration class.
+ *
+ */
+
 #include <filesystem>
 #include <vector>
 #include "ChainGeneration.h"
@@ -12,13 +20,15 @@
 namespace fs = std::filesystem;
 
 namespace MHL {
-
     class Chain {
         private:
-            fs::path mFilePath;
-            std::vector<ChainGeneration> mGenerations;
+            fs::path mFileName; // file name of the chain file taken from full path, via constructor.
+            std::vector<ChainGeneration> mGenerations; // our vector that manages parsed generation data.
         public:
-            void append_generation(ChainGeneration *generation);
+            Chain(fs::path &mhlChainFilePath)
+                : mFileName(mhlChainFilePath.filename()) {
+            }
+            void append_generation(ChainGeneration &generation);
     };
 }
 
