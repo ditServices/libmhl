@@ -4,11 +4,6 @@
 
 #include "ChainFile.h"
 
-
-int MHL::ChainFile::write(const fs::path &file_name) {
-    return 0;
-}
-
 int MHL::ChainFile::parse(const fs::path &file_name) {
     return 0;
 }

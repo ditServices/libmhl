@@ -12,6 +12,7 @@
  * and a further subclass that handles each element of generations within
  * the chain file.
  *
+ * This class will be managed by an MHL History class.
  */
 
 #include "Chain.h"
@@ -28,8 +29,6 @@ namespace MHL {
             : mChainFilePath(mhlSourceChainFilePath), mChain(mhlSourceChainFilePath) {
 
         }
-
-        int write(const fs::path &file_name);
 
         // the individual chain object manages each generation. Generations are a stored within a vector of ChainGeneration objects.
         int parse(const fs::path &file_name);
