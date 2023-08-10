@@ -7,18 +7,11 @@
 
 #include <filesystem>
 #include <vector>
+#include "ChainGeneration.h"
 
 namespace fs = std::filesystem;
 
 namespace MHL {
-    class ChainGeneration {
-    private:
-        int mGenerationNumber;
-        fs::path mASCMHLFileName;
-        std::string mHashFormat;
-        std::string mHashString;
-    public:
-    };
 
     class Chain {
         private:

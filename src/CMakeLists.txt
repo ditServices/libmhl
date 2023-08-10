@@ -11,5 +11,7 @@ add_library(libmhl
         Chain.cpp
         Chain.h
         ChainFile.cpp
-        ChainFile.h)
+        ChainFile.h
+        ChainGeneration.cpp
+        ChainGeneration.h)
 target_link_libraries(libmhl pugixml)

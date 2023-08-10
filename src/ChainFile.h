@@ -14,9 +14,9 @@ namespace MHL {
         fs::path mChainFilePath;
         MHL::Chain mChain;
         pugi::xml_document mChainXMLFile;
-        int parse();
     public:
         int write(const fs::path *file_name);
+        int parse(const fs::path *file_name);
     };
 }
 
