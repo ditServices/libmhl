@@ -4,13 +4,10 @@
 
 #include "Utils.h"
 
-#include <unistd.h>
 #include <sys/utsname.h>
 
 #define BASE_YEAR 1900
 #define BASE_MONTH 1
-
-
 
 std::string MHL::Utils::get_year() {
     return std::to_string(BASE_YEAR + this->mLtm->tm_year);

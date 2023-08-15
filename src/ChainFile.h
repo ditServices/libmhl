@@ -17,6 +17,7 @@
 
 #include "Chain.h"
 #include <pugixml.hpp>
+#include <sstream>
 
 namespace MHL {
     class ChainFile {
@@ -24,14 +25,15 @@ namespace MHL {
         fs::path mChainFilePath; // the full path to the chain file that we are parsing
         MHL::Chain mChain; // our object that will hold our parsed data
         pugi::xml_document mChainXMLFile; // our XML processing instance
+        int parse(const fs::path &file_name);
     public:
         ChainFile(fs::path &mhlSourceChainFilePath)
             : mChainFilePath(mhlSourceChainFilePath), mChain(mhlSourceChainFilePath) {
-
+            if(parse(this->mChainFilePath) == 1) throw std::runtime_error("Error parsing chain file");
         }
 
-        // the individual chain object manages each generation. Generations are a stored within a vector of ChainGeneration objects.
-        int parse(const fs::path &file_name);
+        pugi::xml_node get_first_node();
+
     };
 }
 

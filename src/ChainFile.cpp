@@ -5,7 +5,24 @@
 #include "ChainFile.h"
 
 int MHL::ChainFile::parse(const fs::path &file_name) {
+    pugi::xml_parse_result result = this->mChainXMLFile.load_file(file_name.c_str());
+    if(!result) {
+        return 1;
+    }
+
+    /*
+     * Iterate over the Chainfile hashlist elements and populate our Chain object with append_element().
+     * Each generation is stored in a vector within the Chain object.
+     */
+
+
+
+
     return 0;
+}
+
+pugi::xml_node MHL::ChainFile::get_first_node() {
+    return this->mChainXMLFile.first_child();
 }
 
 

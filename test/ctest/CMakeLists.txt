@@ -22,5 +22,5 @@ target_link_libraries(ctest_host_test libmhl)
 add_test(ctest_host_test_result ctest_host_test)
 
 add_executable(ctest_chainfile_test ctest_chainfile_test.cpp)
-target_link_libraries(ctest_chainfile_test libmhl)
+target_link_libraries(ctest_chainfile_test libmhl pugixml)
 add_test(ctest_chainfile_test_result ctest_chainfile_test)
