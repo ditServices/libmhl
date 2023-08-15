@@ -16,14 +16,25 @@ int MHL::ChainFile::parse(const fs::path &file_name) {
      * Each generation is stored in a vector within the Chain object.
      */
 
-    for(const auto& hashlist_entry : this->mChainXMLFile.child("ascmhldirectory")) {
-        int generation = hashlist_entry.attribute("sequencenr").as_int();
-        std::cout << generation << std::endl;
-        for(const auto& entry : hashlist_entry) {
-            std::cout << entry.name() << ": " << entry.child_value() << std::endl;
-        }
-    }
+    try {
+        std::string hashtype = "c4"; // TODO unsure if need to account for different hash types in mhl chain
 
+        for (const auto &hashlist_entry: this->mChainXMLFile.child("ascmhldirectory")) {
+            int generation = hashlist_entry.attribute("sequencenr").as_int();
+
+            pugi::xml_node chPath = hashlist_entry.select_node("path").node();
+            std::string path = chPath.child_value();
+
+            pugi::xml_node chHash = hashlist_entry.select_node("c4").node();
+            std::string hash = chHash.child_value();
+
+            std::shared_ptr<ChainGeneration> mhlGeneration = std::make_shared<ChainGeneration>(generation, path,
+                                                                                               hashtype, hash);
+            this->mChain.append_generation(mhlGeneration);
+        }
+    } catch(pugi::xpath_exception &e) {
+        return 1;
+    }
 
     return 0;
 }

@@ -6,7 +6,6 @@
 
 #include "../../src/ChainFile.h"
 #include "pugixml.hpp"
-#include <sstream>
 
 int test_chain_file() {
     fs::path sourceMHLChain = "resources/ascmhl_chain.xml";
