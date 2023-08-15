@@ -3,6 +3,7 @@
 //
 
 #include "ChainFile.h"
+#include <iostream>
 
 int MHL::ChainFile::parse(const fs::path &file_name) {
     pugi::xml_parse_result result = this->mChainXMLFile.load_file(file_name.c_str());
@@ -15,7 +16,13 @@ int MHL::ChainFile::parse(const fs::path &file_name) {
      * Each generation is stored in a vector within the Chain object.
      */
 
-
+    for(const auto& hashlist_entry : this->mChainXMLFile.child("ascmhldirectory")) {
+        int generation = hashlist_entry.attribute("sequencenr").as_int();
+        std::cout << generation << std::endl;
+        for(const auto& entry : hashlist_entry) {
+            std::cout << entry.name() << ": " << entry.child_value() << std::endl;
+        }
+    }
 
 
     return 0;
