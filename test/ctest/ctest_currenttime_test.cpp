@@ -7,10 +7,8 @@
 #include "../../src/Utils.h"
 
 int test_current_time() {
-    MHL::Utils mTime;
-    std::cout << mTime.get_day() << " " << mTime.get_month() << " " << mTime.get_year()<< " " << std::endl;
-    std::array<std::string, 3> current_time = mTime.get_time();
-    std::cout << current_time[0] << ":" << current_time[1] << ":" << current_time[2] << std::endl;
+   MHL::CurrentTime now = MHL::get_current_time();
+   std::cout << now.mLtm->tm_hour << now.mLtm->tm_min << now.mLtm->tm_sec << std::endl;
     return 0;
 }
 

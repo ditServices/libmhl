@@ -32,8 +32,6 @@ namespace MHL {
             if(parse(this->mChainFilePath) == 1) throw std::runtime_error("Error parsing chain file");
         }
 
-        pugi::xml_node get_first_node();
-
     };
 }
 

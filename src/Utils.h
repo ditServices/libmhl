@@ -15,20 +15,20 @@
 namespace MHL {
     const int MAX_HN_LEN = 255;
 
-    class Utils {
-    private:
+    typedef struct CurrentTime {
         time_t mNow = time(nullptr);
         tm *mLtm = localtime(&mNow);
-    public:
-        struct utsname mHostDetails{};
-        const char *mUserName;
+    } CurrentTime;
 
-        Utils();
-        std::string get_year();
-        std::string get_month();
-        std::string get_day();
-        std::array<std::string, 3> get_time();
-    };
+    typedef struct ClientDetails {
+        struct utsname mHostDetails{};
+        const char *mUserName = nullptr;
+    } ClientDetails;
+
+    CurrentTime get_current_time();
+    std::array<std::string, 3> current_time_as_string(CurrentTime &current_time);
+    std::array<std::string, 3> current_date_as_string(CurrentTime &current_time);
+    ClientDetails get_client_details();
 }
 
 #endif //LIBMHL_UTILS_H

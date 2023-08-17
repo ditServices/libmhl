@@ -39,10 +39,5 @@ int MHL::ChainFile::parse(const fs::path &file_name) {
     return 0;
 }
 
-pugi::xml_node MHL::ChainFile::get_first_node() {
-    return this->mChainXMLFile.first_child();
-}
-
-
 
 

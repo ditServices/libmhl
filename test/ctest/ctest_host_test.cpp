@@ -10,16 +10,8 @@
 #include "../../src/Utils.h"
 
 int test_host_details() {
-    try {
-        MHL::Utils utilHelper;
-        std::cout << utilHelper.mHostDetails.nodename << std::endl;
-        std::cout << utilHelper.mHostDetails.release<< std::endl;
-        std::cout << utilHelper.mHostDetails.version << std::endl;
-        std::cout << utilHelper.mUserName << std::endl;
-    } catch (std::runtime_error &e) {
-        std::cout << e.what() << std::endl;
-        return -1;
-    }
+   MHL::ClientDetails cDetails = MHL::get_client_details();
+   std::cout << cDetails.mUserName << " " << cDetails.mHostDetails.nodename << std::endl;
     return 0;
 }
 

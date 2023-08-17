@@ -9,31 +9,33 @@
 #define BASE_YEAR 1900
 #define BASE_MONTH 1
 
-std::string MHL::Utils::get_year() {
-    return std::to_string(BASE_YEAR + this->mLtm->tm_year);
+MHL::CurrentTime MHL::get_current_time() {
+    CurrentTime cTime;
+    return cTime;
 }
 
-std::string MHL::Utils::get_month() {
-    return std::to_string(BASE_MONTH + this->mLtm->tm_mon);
+std::array<std::string, 3> current_time_as_string(MHL::CurrentTime &current_time) {
+    std::array<std::string, 3> sTime;
+    sTime[0] = std::to_string(current_time.mLtm->tm_hour);
+    sTime[1] = std::to_string(current_time.mLtm->tm_min);
+    sTime[2] = std::to_string(current_time.mLtm->tm_sec);
+    return sTime;
 }
 
-std::string MHL::Utils::get_day() {
-    return std::to_string(this->mLtm->tm_mday);
+std::array<std::string, 3> current_date_as_string(MHL::CurrentTime &current_time) {
+    std::array<std::string, 3> sDate;
+    sDate[0] = std::to_string(current_time.mLtm->tm_mday);
+    sDate[1] = std::to_string(BASE_MONTH + current_time.mLtm->tm_mon);
+    sDate[2] = std::to_string(BASE_YEAR + current_time.mLtm->tm_year);
+    return sDate;
 }
 
-// get current time and parse into a std::array of std::strings hour : min : sec
-std::array<std::string, 3> MHL::Utils::get_time() {
-    std::array<std::string, 3> current_time;
-    current_time[0] = std::to_string(this->mLtm->tm_hour);
-    current_time[1] = std::to_string(this->mLtm->tm_min);
-    current_time[2] = std::to_string(this->mLtm->tm_sec);
-    return current_time;
+MHL::ClientDetails MHL::get_client_details() {
+    ClientDetails cDetails;
+    cDetails.mUserName = getenv("USER");
+    int res = uname(&cDetails.mHostDetails);
+    return cDetails;
 }
 
-MHL::Utils::Utils() {
-    this->mUserName = getenv("USER");
-    if(!this->mUserName) throw std::runtime_error("Unable to get username");
-    int res = uname(&this->mHostDetails);
-    if(res != 0) throw std::runtime_error("Unable to get system OS details");
-}
+
 
