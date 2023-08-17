@@ -6,7 +6,7 @@
 
 #include "../../src/IgnoreSpec.h"
 
-int create_ignorelist(std::vector<std::string> *patterns) {
+int create_ignorelist(std::vector<std::string> &patterns) {
     try {
         MHL::IgnoreSpec spec(patterns);
     } catch(std::exception &e) {
@@ -21,5 +21,5 @@ int main() {
     pats.emplace_back("ascmhl");
     pats.emplace_back("");
 
-    return create_ignorelist(&pats);
+    return create_ignorelist(pats);
 }
