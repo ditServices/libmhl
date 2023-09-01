@@ -31,7 +31,6 @@ namespace MHL {
             : mChainFilePath(mhlSourceChainFilePath), mChain(mhlSourceChainFilePath) {
             if(parse(this->mChainFilePath) == 1) throw std::runtime_error("Error parsing chain file");
         }
-
     };
 }
 

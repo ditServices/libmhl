@@ -25,9 +25,8 @@ namespace MHL {
             fs::path mFileName; // file name of the chain file taken from full path, via constructor.
             std::vector<std::shared_ptr<ChainGeneration>> mGenerations; // our vector that manages parsed generation data.
         public:
-            Chain(fs::path &mhlChainFilePath)
-                : mFileName(mhlChainFilePath.filename()) {
-            }
+            explicit Chain(fs::path &mhlChainFilePath)
+                : mFileName(mhlChainFilePath.filename()) {}
             void append_generation(std::shared_ptr<ChainGeneration> &generation);
     };
 }

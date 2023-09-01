@@ -19,9 +19,7 @@ namespace MHL {
     public:
         ChainGeneration(int mhlGenNumber, std::string &mhlFileName, std::string &mhlHashFormat, std::string &mhlHash)
                 : mGenerationNumber(mhlGenNumber), mASCMHLFileName(mhlFileName), mHashFormat(mhlHashFormat),
-                  mHashString(mhlHash) {
-
-        }
+                  mHashString(mhlHash) {}
     };
 }
 #endif //LIBMHL_CHAINGENERATION_H
