@@ -70,10 +70,10 @@ namespace MHL {
 
         explicit MHLProcessInfo(pugi::xml_node &process_info) :
             mXMLProcessInfo(process_info) {
-            if(pugi::xml_node process = mXMLProcessInfo.select_node("process").node()) {
+            if(pugi::xml_node process = this->mXMLProcessInfo.select_node("process").node()) {
                 this->mProcess.mProccessType = process.child_value();
             }
-            if(pugi::xml_node ignore = mXMLProcessInfo.select_node("ignore").node()) {
+            if(pugi::xml_node ignore = this->mXMLProcessInfo.select_node("ignore").node()) {
                 for(const auto& ignore_pat : ignore.child("ignore")) {
                     try {
                     std::string captured_pattern = ignore_pat.child_value();
@@ -92,13 +92,29 @@ namespace MHL {
         MHLAuthor mAuthor;
         std::string mHostName;
         std::string mTool;
+        std::string mToolVersion;
         std::string mDateTime;
         std::string mComment;
         pugi::xml_node mXMLCreatorInfo;
     public:
         explicit MHLCreatorInfo(pugi::xml_node &creator_info) :
             mXMLCreatorInfo(creator_info), mAuthor(creator_info.select_node("author").node()) {
-            //parse other vars
+            if(pugi::xml_node creation_date = this->mXMLCreatorInfo.select_node("creationdate").node()) {
+                this->mDateTime = creation_date.child_value();
+            }
+
+            if(pugi::xml_node host_name = this->mXMLCreatorInfo.select_node("hostname").node()) {
+                this->mHostName = host_name.child_value();
+            }
+
+            if(pugi::xml_node tool = this->mXMLCreatorInfo.select_node("tool").node()) {
+                this->mTool = tool.child_value();
+                this->mToolVersion = tool.root().attribute("version").as_string();
+            }
+
+            if(pugi::xml_node comment = this->mXMLCreatorInfo.select_node("comment").node()) {
+                this->mComment = comment.child_value();
+            }
         }
     };
 
