@@ -70,7 +70,19 @@ namespace MHL {
 
         explicit MHLProcessInfo(pugi::xml_node &process_info) :
             mXMLProcessInfo(process_info) {
-
+            if(pugi::xml_node process = mXMLProcessInfo.select_node("process").node()) {
+                this->mProcess.mProccessType = process.child_value();
+            }
+            if(pugi::xml_node ignore = mXMLProcessInfo.select_node("ignore").node()) {
+                for(const auto& ignore_pat : ignore.child("ignore")) {
+                    try {
+                    std::string captured_pattern = ignore_pat.child_value();
+                    this->mIgnoreSpec.add_pattern(captured_pattern);
+                    } catch (std::length_error &e) {
+                       throw std::runtime_error("Error parsing ignore list");
+                    }
+                }
+            }
         }
     };
 
