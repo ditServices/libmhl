@@ -126,16 +126,15 @@ namespace MHL {
         std::string mAction;
         std::string mDateTime;
         std::string mFileSize;
-    private:
-        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
-            mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
-            // conditional to create new date time entry
-        }
+        pugi::xml_node mXMLHash;
+    public:
+        explicit HashEntry(pugi::xml_node &hash_node)
+            : mXMLHash(hash_node) { }
 
-        explicit HashEntry(pugi::xml_node &hash) {
-
-        }
-
+//        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
+//                mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
+//            // conditional to create new date time entry
+//        }
     };
 
     // each mhl chain generation references a MHL file that is parsed into this class. This process, that involves to primary classes is managed by the MHLHistory object.
@@ -147,6 +146,10 @@ namespace MHL {
     public:
         HashList(pugi::xml_node &creator_info, pugi::xml_node &process_info, pugi::xml_node &hash_list) :
                 mCreatorInfo(creator_info), mProcessInfo(process_info) {
+
+            for(auto &hash : hash_list.child("hashes")) {
+                std::shared_ptr<HashEntry> hash_entry = std::make_shared<HashEntry>(hash);
+            }
 
         }
     };
