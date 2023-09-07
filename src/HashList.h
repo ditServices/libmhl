@@ -14,6 +14,7 @@
  */
 namespace MHL {
 
+    //class that holds the parsing and data for managing the author element of the MHL file
     class MHLAuthor {
     private:
         std::string mAuthorName;  //required
@@ -50,13 +51,16 @@ namespace MHL {
                 this->mAuthorPhone = "";
             }
         }
+
     };
 
+    //struct that holds the MHL process info
     typedef struct MHLProcess {
         std::string mProccessType;
         std::string mName;
     } MHLProcess;
 
+    //class that manages MHLProcess data structure and the ignore patterns
     class MHLProcessInfo {
     private:
         MHLProcess mProcess;
@@ -86,6 +90,7 @@ namespace MHL {
         }
     };
 
+    //class that handles the general metadata of the mhl file. Manages MHLAuthor
     class MHLCreatorInfo {
     private:
         ClientDetails mClientInfo;
@@ -119,6 +124,7 @@ namespace MHL {
     };
 
     // date and time issue here
+    // class that manages a single hash entry and it's associated data elements
     class HashEntry {
     private:
         std::string mHashFormat;
@@ -128,16 +134,24 @@ namespace MHL {
         std::string mFileSize;
         pugi::xml_node mXMLHash;
     public:
-        explicit HashEntry(pugi::xml_node &hash_node)
-            : mXMLHash(hash_node) { }
 
-//        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
-//                mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
-//            // conditional to create new date time entry
-//        }
+        explicit HashEntry(pugi::xml_node &hash_node)
+            : mXMLHash(hash_node) {
+
+            //<path size="603456065" lastmodificationdate="2023-08-17T11:09:32+01:00">B003C001_230312_R18H.mxf</path>
+            //<xxh64 action="original" hashdate="2023-08-17T11:09:38.999606+01:00">5ad36ccc60f6f669</xxh64>
+            // Hashtype element can change.
+
+        }
+
+        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
+                mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
+            // conditional to create new date time entry
+        }
     };
 
     // each mhl chain generation references a MHL file that is parsed into this class. This process, that involves to primary classes is managed by the MHLHistory object.
+    //the full mhlHashList with it's creator and process info sections managed here.
     class HashList {
     private:
         MHLCreatorInfo mCreatorInfo;
