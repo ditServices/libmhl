@@ -9,6 +9,8 @@
  * HashEntry class function definitions.
  */
 
+// TODO: Extract data from xml node hash and return the hash, hash format, action and date in one structure.
+
 MHL::HashData MHL::HashEntry::p_c4(pugi::xml_node hash) {
     return {};
 }
