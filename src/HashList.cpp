@@ -3,3 +3,32 @@
 //
 
 #include "HashList.h"
+
+
+/*
+ * HashEntry class function definitions.
+ */
+
+MHL::HashData MHL::HashEntry::p_c4(pugi::xml_node hash) {
+    return {};
+}
+
+MHL::HashData MHL::HashEntry::p_md5(pugi::xml_node hash) {
+    return {};
+}
+
+MHL::HashData MHL::HashEntry::p_sha1(pugi::xml_node hash) {
+    return {};
+}
+
+MHL::HashData MHL::HashEntry::p_xxh128(pugi::xml_node hash) {
+    return {};
+}
+
+MHL::HashData MHL::HashEntry::p_xxh3(pugi::xml_node hash) {
+    return {};
+}
+
+MHL::HashData MHL::HashEntry::p_xxh64(pugi::xml_node hash) {
+    return {};
+}

@@ -9,6 +9,8 @@
 #include "IgnoreSpec.h"
 #include "pugixml.hpp"
 
+#include <map>
+
 /*
  * Contains classes that represent the elemets of the MHL file
  */
@@ -125,29 +127,68 @@ namespace MHL {
 
     // date and time issue here
     // class that manages a single hash entry and it's associated data elements
-    class HashEntry {
-    private:
+
+    typedef struct HashData {
         std::string mHashFormat;
         std::string mHash;
         std::string mAction;
+        std::string mHashDate;
+    } HashData;
+
+    class HashEntry {
+    private:
+        HashData mHash;
         std::string mDateTime;
         std::string mFileSize;
+        std::string mFileName;
         pugi::xml_node mXMLHash;
+
+        static HashData p_c4(pugi::xml_node hash);
+        static HashData p_md5(pugi::xml_node hash);
+        static HashData p_sha1(pugi::xml_node hash);
+        static HashData p_xxh128(pugi::xml_node hash);
+        static HashData p_xxh3(pugi::xml_node hash);
+        static HashData p_xxh64(pugi::xml_node hash);
+
     public:
 
         explicit HashEntry(pugi::xml_node &hash_node)
             : mXMLHash(hash_node) {
 
+            // DATA TO BE PARSED from hash_node:
             //<path size="603456065" lastmodificationdate="2023-08-17T11:09:32+01:00">B003C001_230312_R18H.mxf</path>
             //<xxh64 action="original" hashdate="2023-08-17T11:09:38.999606+01:00">5ad36ccc60f6f669</xxh64>
             // Hashtype element can change.
 
+            // use std::map to call processing functions when a hash type node is found.
+
+            using hash_id = std::function<HashData(pugi::xml_node)>;
+            std::map<std::string, hash_id> hash_parse {
+                    { "c4", &HashEntry::p_c4},
+                    { "md5", &HashEntry::p_md5 },
+                    { "sha1", &HashEntry::p_sha1 },
+                    { "xxh128", &HashEntry::p_xxh128},
+                    { "xxh3", &HashEntry::p_xxh3},
+                    { "xxh64", &HashEntry::p_xxh64}
+            };
+
+            for(auto hash_node_data: mXMLHash.first_child()) {
+
+                if(strcmp(hash_node_data.name(), "path") == 0) {
+                    this->mFileSize = hash_node_data.root().attribute("size").as_string();
+                    this->mDateTime = hash_node_data.root().attribute("lastmodificationdate").as_string();
+                    this->mFileName = hash_node_data.child_value();
+                }
+
+                this->mHash = hash_parse[hash_node_data.name()](hash_node_data);
+            }
         }
 
-        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
-                mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
-            // conditional to create new date time entry
-        }
+//        blank constructor needs adapting due to addition of HashData struct...
+//        HashEntry(std::string &hash_format, std::string &hash, std::string &action, std::string &datetime, std::string &file_size) :
+//                mHashFormat(hash_format), mHash(hash), mAction(action), mDateTime(datetime), mFileSize(file_size) {
+//            // conditional to create new date time entry
+//        }
     };
 
     // each mhl chain generation references a MHL file that is parsed into this class. This process, that involves to primary classes is managed by the MHLHistory object.
@@ -168,6 +209,5 @@ namespace MHL {
         }
     };
 }
-
 
 #endif //LIBMHL_HASHLIST_H
